@@ -37,6 +37,11 @@
                         <td><a href="register">Register</a>
                         </td>
                     </tr>
+                    <tr>
+                        <td></td>
+                        <td><a href="/Register/forgotpassword">ForgotPassword</a>
+                        </td>
+                    </tr>
                 </table>
             </form:form>
             <table align="center">

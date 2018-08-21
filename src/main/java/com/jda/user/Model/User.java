@@ -10,6 +10,13 @@ public class User  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
+	private String token;
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -58,6 +65,10 @@ public class User  implements Serializable{
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + ", token=" + token + ", firstname=" + firstname
+		      + ", lastname=" + lastname + ", email=" + email + ", address=" + address + ", phone=" + phone + "]";
+	}
 
 }

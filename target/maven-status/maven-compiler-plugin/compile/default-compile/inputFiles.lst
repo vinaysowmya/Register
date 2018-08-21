@@ -1,4 +1,6 @@
 /home/bridgelabz/workspace/Register/src/main/java/com/jda/user/Controller/RegistrationController.java
+/home/bridgelabz/workspace/Register/src/main/java/com/jda/user/ValidateUser/ValidateUser.java
+/home/bridgelabz/workspace/Register/src/main/java/com/jda/user/Controller/WelcomeController.java
 /home/bridgelabz/workspace/Register/src/main/java/com/jda/user/Controller/LoginController.java
 /home/bridgelabz/workspace/Register/src/main/java/com/jda/user/dao/UserDaoImpl.java
 /home/bridgelabz/workspace/Register/src/main/java/com/jda/user/service/UserService.java

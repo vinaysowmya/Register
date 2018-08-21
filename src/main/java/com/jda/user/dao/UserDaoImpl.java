@@ -15,13 +15,12 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import com.jda.user.Model.Login;
 import com.jda.user.Model.User;
 
+
 public class UserDaoImpl implements UserDao{
 
 	  @Autowired
 	 private  JdbcTemplate jdbcTemplate;
-	
-	
-		@Override
+
 		public void register(User user) {
 			String sql = "insert into myuser values(?,?,?,?,?,?,?)";
 		    jdbcTemplate.update(sql, new Object[] { user.getUsername(), user.getPassword(), user.getFirstname(),
@@ -49,8 +48,62 @@ public class UserDaoImpl implements UserDao{
 				return null;
 			
 		}
-	  }
-	  class UserMapper implements RowMapper {
+	  
+public  User forgotpassword(String email) {
+	String sql = "select * from myuser where email='" + email+"'";
+	
+    
+//   List<User> users = jdbcTemplate.query(sql, (ResultSetExtractor<List<User>>) new UserMapper());
+   
+	  List<User> users = jdbcTemplate.query(sql, new UserMapper());
+  
+    if (users.size() > 0)
+    {
+	
+          System.out.println(users.get(0).getFirstname());
+          return ( users).get(0);
+    }
+		return null;
+	
+}
+@Override
+public User findUserByEmail(String email) {
+	String sql = "select * from myuser where email='" + email+"'";
+	
+   
+// List<User> users = jdbcTemplate.query(sql, (ResultSetExtractor<List<User>>) new UserMapper());
+ 
+	  List<User> users = jdbcTemplate.query(sql, new UserMapper());
+
+  if (users.size() > 0)
+  {
+	
+    //  System.out.println("Sagar");
+        return   users.get(0);
+  }
+		return null;
+	
+	
+}
+@Override
+public void update(String token, String email) {
+	String sql = "update myuser set token='"+token+"' where email='" + email+"'";
+ // jdbcTemplate.query(sql, new UserMapper());
+	jdbcTemplate.update(sql);
+
+}
+public User getUserbyToken(String token) {
+	   String sql = "select * from myuser where token='" + token 
+	    + "'";
+	    List<User> users = jdbcTemplate.query(sql, new UserMapper());
+	    return users.size() > 0 ? users.get(0) : null;
+	    }
+public void newPassword(String password,String token) {
+	String sql="update myuser set password='"+password +"'  where token='"+token+"'";
+	jdbcTemplate.update(sql);
+}
+}
+	  class UserMapper implements RowMapper<User> {
 	  public User mapRow(ResultSet rs, int arg1) throws SQLException {
 	    User user = new User();
 	    user.setUsername(rs.getString("username"));
@@ -60,6 +113,12 @@ public class UserDaoImpl implements UserDao{
 	    user.setEmail(rs.getString("email"));
 	    user.setAddress(rs.getString("address"));
 	    user.setPhone(rs.getString("phone"));
+	    user.setToken(rs.getString("token"));
 	    return user;
+	    
 	  }
 	  }
+	  
+	
+	
+

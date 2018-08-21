@@ -16,6 +16,21 @@
         <mysql.connector.version>5.1.9</mysql.connector.version>
     </properties>
     <dependencies>
+    <dependency>
+	<groupId>com.sun.mail</groupId>
+	<artifactId>javax.mail</artifactId>
+	<version>1.6.1</version>
+</dependency>
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.0.8.RELEASE</version>
+</dependency>
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context-support</artifactId>
+    <version>5.0.8.RELEASE</version>
+</dependency>
         <!-- Junit -->
         <dependency>
             <groupId>junit</groupId>
