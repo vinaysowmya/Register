@@ -10,4 +10,5 @@ public interface UserDao{
 		void update(String token, String email);
 		public User getUserbyToken(String token) ;
 		public void newPassword(String password,String token) ;
+		public String generator(String password );
 	}

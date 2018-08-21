@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 import javax.activation.DataSource;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,15 +24,15 @@ public class UserDaoImpl implements UserDao{
 	 private  JdbcTemplate jdbcTemplate;
 
 		public void register(User user) {
-			String sql = "insert into myuser values(?,?,?,?,?,?,?)";
-		    jdbcTemplate.update(sql, new Object[] { user.getUsername(), user.getPassword(), user.getFirstname(),
-		    user.getLastname(), user.getEmail(), user.getAddress(), user.getPhone() });
+			
+			String sql = "insert into myuser values(?,?,?,?,?,?,?,?)";
+		    jdbcTemplate.update(sql, new Object[] { user.getUsername(), generator(user.getPassword()), user.getFirstname(),
+		    user.getLastname(), user.getEmail(), user.getAddress(), user.getPhone(), user.getToken() });
 			// TODO Auto-generated method stub
 			
 		}
 		public  User validateUser(Login login) {
-			String sql = "select * from myuser where username='" + login.getUsername() + "' and password='" + login.getPassword()
-		    + "'";
+			String sql = "select * from myuser where username='" + login.getUsername() +  "'";
 			String s=login.getUsername() ;
 			System.out.println(s);
 		    
@@ -102,7 +104,18 @@ public void newPassword(String password,String token) {
 	String sql="update myuser set password='"+password +"'  where token='"+token+"'";
 	jdbcTemplate.update(sql);
 }
+@Override
+public String generator(String password) {
+
+
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String changedPassword = passwordEncoder.encode(password);
+		System.out.println("Sagar" +changedPassword);
+		return changedPassword;
+
+	}
 }
+
 	  class UserMapper implements RowMapper<User> {
 	  public User mapRow(ResultSet rs, int arg1) throws SQLException {
 	    User user = new User();

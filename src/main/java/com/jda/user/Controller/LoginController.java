@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,9 @@ public class LoginController
 	    ModelAndView mav = null;
 	    User user = userService.validateUser(login);
 	    if (null != user) {
+	   	 BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(11);
+	   	 if(passwordEncoder.matches(login.getPassword(),user.getPassword()))
+	   	 {
 	   	 HttpSession session=request.getSession();
 	   	 session.setAttribute("name", user.getFirstname());
 	  	// response.sendRedirect("/welcome");
@@ -51,7 +55,9 @@ public class LoginController
 	    mav = new ModelAndView("login");
 	    mav.addObject("message", "Username or Password is wrong!!");
 	    } 
+	    }
 	    return mav;
-	  }
+	  
+	}
 
 }

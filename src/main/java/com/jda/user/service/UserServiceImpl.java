@@ -5,8 +5,9 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jda.user.Model.Login;
 import com.jda.user.Model.User;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService{
 		return userdao.validateUser(login);
 	}
 
-
+	@Transactional
 	public void register(User user) {
 	userdao.register(user);
 		
@@ -49,6 +50,7 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
+	@Transactional
 	public void newPassword(String password, String token) {
 	userdao.newPassword(password, token);
 		
@@ -61,6 +63,14 @@ public class UserServiceImpl implements UserService{
 		return user;
 	}
 
+	public String generator(String password) {
+
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String changedPassword = passwordEncoder.encode(password);
+		System.out.println(changedPassword);
+		return changedPassword;
+
+	}
 
 
 	
